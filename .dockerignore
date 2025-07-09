@@ -1,0 +1,17 @@
+# Diretórios e arquivos a serem ignorados no build do Docker
+target/
+.git/
+.gitignore
+README.md
+.mvn/
+mvnw
+mvnw.cmd
+*.iml
+.idea/
+.vscode/
+.settings/
+.project
+.classpath
+Dockerfile
+compose.yaml
+*.log

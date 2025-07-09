@@ -1,0 +1,30 @@
+### Criar novo estoque
+POST http://localhost:8084/estoques
+Content-Type: application/json
+
+{
+  "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+  "quantidade": 30
+}
+
+### Consultar estoque
+GET http://localhost:8084/estoques/a5db46c6-9296-48fd-bf6f-5b0440a5f683
+Accept: application/json
+
+### Baixar estoque (baixa de 10 unidades)
+POST http://localhost:8084/estoques/baixa
+Content-Type: application/json
+
+{
+  "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+  "quantidade": 10
+}
+
+### Estornar estoque (retorno de 10 unidades)
+POST http://localhost:8084/estoques/baixa
+Content-Type: application/json
+
+{
+  "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+  "quantidade": -10
+}
