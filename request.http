@@ -24,3 +24,15 @@ Content-Type: application/json
     "quantidade": 10
   }
 ]
+
+### Estornar estoque (quantidade negativa)
+
+POST http://localhost:8084/estoques/baixa
+Content-Type: application/json
+
+[
+  {
+    "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+    "quantidade": -5
+  }
+]

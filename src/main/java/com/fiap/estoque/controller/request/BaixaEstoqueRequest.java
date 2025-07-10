@@ -2,7 +2,6 @@ package com.fiap.estoque.controller.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import java.util.UUID;
 
 @Schema(description = "Requisição para baixa de estoque")
@@ -11,8 +10,7 @@ public record BaixaEstoqueRequest(
     @NotNull(message = "ID do produto é obrigatório")
     UUID idProduto,
     
-    @Schema(description = "Quantidade a ser baixada", example = "5")
+    @Schema(description = "Quantidade a ser baixada (positiva) ou estornada (negativa)", example = "5")
     @NotNull(message = "Quantidade é obrigatória")
-    @Positive(message = "Quantidade deve ser positiva")
     Integer quantidade
 ) {}

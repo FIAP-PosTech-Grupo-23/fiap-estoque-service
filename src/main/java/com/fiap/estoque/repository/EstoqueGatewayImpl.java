@@ -31,6 +31,19 @@ public class EstoqueGatewayImpl implements EstoqueGateway {
     }
     
     @Override
+    @Transactional
+    public Estoque atualizarQuantidade(UUID idProduto, Integer novaQuantidade) {
+        Optional<EstoqueEntity> entityOpt = repository.findByIdProduto(idProduto);
+        if (entityOpt.isPresent()) {
+            EstoqueEntity entity = entityOpt.get();
+            entity.setQuantidade(novaQuantidade);
+            EstoqueEntity savedEntity = repository.save(entity);
+            return mapper.toDomain(savedEntity);
+        }
+        throw new RuntimeException("Estoque não encontrado para o produto: " + idProduto);
+    }
+    
+    @Override
     public Optional<Estoque> buscarPorIdProduto(UUID idProduto) {
         return repository.findByIdProduto(idProduto)
                 .map(mapper::toDomain);

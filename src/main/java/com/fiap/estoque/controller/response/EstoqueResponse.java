@@ -1,4 +1,4 @@
-    package com.fiap.estoque.controller.response;
+package com.fiap.estoque.controller.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.UUID;
@@ -11,7 +11,7 @@ public record EstoqueResponse(
     @Schema(description = "Quantidade solicitada", example = "15")
     Integer quantidade,
 
-    @Schema(description = "Status da operação", example = "Disponível")
-    String status
+    @Schema(description = "Status da operação", example = "DISPONIVEL")
+    StatusEstoque status
 ) {
 }

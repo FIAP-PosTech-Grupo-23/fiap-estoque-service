@@ -58,7 +58,7 @@ public class EstoqueController {
         Estoque domain = estoqueMapper.toDomain(request);
         Estoque estoqueCriado = criarEstoqueUseCase.executar(domain);
         
-        EstoqueResponse response = estoqueMapper.toResponse(estoqueCriado, StatusEstoque.DISPONIVEL.getDescricao());
+        EstoqueResponse response = estoqueMapper.toResponse(estoqueCriado, StatusEstoque.DISPONIVEL);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -68,7 +68,7 @@ public class EstoqueController {
             @Parameter(description = "ID do produto") @PathVariable UUID idProduto) {
         Estoque estoque = consultarEstoqueUseCase.executar(idProduto);
         
-        String status = estoque.getQuantidade() > 0 ? StatusEstoque.DISPONIVEL.getDescricao() : StatusEstoque.INDISPONIVEL.getDescricao();
+        StatusEstoque status = estoque.getQuantidade() > 0 ? StatusEstoque.DISPONIVEL : StatusEstoque.INDISPONIVEL;
         EstoqueResponse response = estoqueMapper.toResponse(estoque, status);
         
         return ResponseEntity.ok(response);

@@ -12,6 +12,8 @@ public interface EstoqueGateway {
     
     Optional<Estoque> buscarPorIdProduto(UUID idProduto);
     
+    Estoque atualizarQuantidade(UUID idProduto, Integer novaQuantidade);
+    
     List<Estoque> buscarTodos();
     
     void removerPorIdProduto(UUID idProduto);

@@ -3,6 +3,7 @@ package com.fiap.estoque.mapper;
 import com.fiap.estoque.controller.request.BaixaEstoqueRequest;
 import com.fiap.estoque.controller.request.CriarEstoqueRequest;
 import com.fiap.estoque.controller.response.EstoqueResponse;
+import com.fiap.estoque.controller.response.StatusEstoque;
 import com.fiap.estoque.domain.Estoque;
 import com.fiap.estoque.repository.entity.EstoqueEntity;
 import org.mapstruct.Mapper;
@@ -23,7 +24,7 @@ public interface EstoqueMapper {
     
     Estoque toDomain(BaixaEstoqueRequest request);
     
-    default EstoqueResponse toResponse(Estoque domain, String status) {
+    default EstoqueResponse toResponse(Estoque domain, StatusEstoque status) {
         return new EstoqueResponse(domain.getIdProduto(), domain.getQuantidade(), status);
     }
 }
