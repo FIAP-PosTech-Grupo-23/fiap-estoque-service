@@ -1,19 +1,18 @@
 package com.fiap.estoque.domain;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class Estoque {
 
-    private UUID idProduto;
+    private Long idProduto;
     private Integer quantidade;
 
-    public Estoque(UUID idProduto, Integer quantidade) {
+    public Estoque(Long idProduto, Integer quantidade) {
         this.idProduto = idProduto;
         this.quantidade = quantidade;
     }
 
-    public UUID getIdProduto() {
+    public Long getIdProduto() {
         return idProduto;
     }
 

@@ -1,7 +1,6 @@
 package com.fiap.estoque.repository.entity;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "estoque")
@@ -12,7 +11,7 @@ public class EstoqueEntity {
     private Long id;
     
     @Column(name = "id_produto", nullable = false, unique = true)
-    private UUID idProduto;
+    private Long idProduto;
     
     @Column(nullable = false)
     private Integer quantidade;
@@ -20,10 +19,11 @@ public class EstoqueEntity {
     public EstoqueEntity() {
     }
     
-    public EstoqueEntity(UUID idProduto, Integer quantidade) {
+    public EstoqueEntity(Long idProduto, Integer quantidade) {
         this.idProduto = idProduto;
         this.quantidade = quantidade;
     }
+    
     
     public Long getId() {
         return id;
@@ -33,11 +33,11 @@ public class EstoqueEntity {
         this.id = id;
     }
     
-    public UUID getIdProduto() {
+    public Long getIdProduto() {
         return idProduto;
     }
     
-    public void setIdProduto(UUID idProduto) {
+    public void setIdProduto(Long idProduto) {
         this.idProduto = idProduto;
     }
     

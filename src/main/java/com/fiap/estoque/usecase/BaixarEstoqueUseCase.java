@@ -2,7 +2,6 @@ package com.fiap.estoque.usecase;
 
 import com.fiap.estoque.domain.Estoque;
 import com.fiap.estoque.exception.EstoqueInsuficienteException;
-import com.fiap.estoque.exception.ProdutoNaoEncontradoException;
 import com.fiap.estoque.gateway.EstoqueGateway;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +14,15 @@ public class BaixarEstoqueUseCase {
         this.gateway = gateway;
     }
     
-    public boolean executar(Estoque requisicao) {
-        Estoque estoque = gateway.buscarPorIdProduto(requisicao.getIdProduto())
-                .orElseThrow(() -> new ProdutoNaoEncontradoException("Produto não encontrado: " + requisicao.getIdProduto()));
-        
-        // Verifica se há estoque suficiente
-        if (!estoque.isDisponivel(requisicao.getQuantidade())) {
-            throw new EstoqueInsuficienteException("Estoque insuficiente. Disponível: " + estoque.getQuantidade() + ", Solicitado: " + requisicao.getQuantidade());
+    public Estoque executar(Long idProduto, Integer quantidadeParaBaixa) {
+        Estoque estoque = gateway.buscarPorIdProduto(idProduto)
+                .orElseThrow(() -> new com.fiap.estoque.exception.ProdutoNaoEncontradoException(idProduto));
+
+        if (!estoque.isDisponivel(quantidadeParaBaixa)) {
+            throw new EstoqueInsuficienteException(idProduto, estoque.getQuantidade(), quantidadeParaBaixa);
         }
         
-        // Realiza a baixa
-        estoque.removerQuantidade(requisicao.getQuantidade());
-        gateway.salvar(estoque);
-        
-        return true;
+        estoque.removerQuantidade(quantidadeParaBaixa);
+        return gateway.salvar(estoque);
     }
 }

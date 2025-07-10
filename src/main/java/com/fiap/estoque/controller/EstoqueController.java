@@ -18,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/estoques")
@@ -65,7 +64,7 @@ public class EstoqueController {
     @GetMapping("/{idProduto}")
     @Operation(summary = "Consultar estoque", description = "Consulta o estoque de um produto específico")
     public ResponseEntity<EstoqueResponse> consultar(
-            @Parameter(description = "ID do produto") @PathVariable UUID idProduto) {
+            @Parameter(description = "ID do produto") @PathVariable Long idProduto) {
         Estoque estoque = consultarEstoqueUseCase.executar(idProduto);
         
         StatusEstoque status = estoque.getQuantidade() > 0 ? StatusEstoque.DISPONIVEL : StatusEstoque.INDISPONIVEL;

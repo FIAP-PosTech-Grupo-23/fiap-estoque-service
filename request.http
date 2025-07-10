@@ -4,23 +4,24 @@ POST http://localhost:8084/estoques
 Content-Type: application/json
 
 {
-  "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+  "idProduto": 1,
   "quantidade": 30
 }
 
 ### Consultar estoque
 
-GET http://localhost:8084/estoques/a5db46c6-9296-48fd-bf6f-5b0440a5f683
+GET http://localhost:8084/estoques/1
 Accept: application/json
 
 ### Baixar estoque (lista de produtos)
+
 
 POST http://localhost:8084/estoques/baixa
 Content-Type: application/json
 
 [
   {
-    "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+    "idProduto": 1,
     "quantidade": 10
   }
 ]
@@ -32,7 +33,7 @@ Content-Type: application/json
 
 [
   {
-    "idProduto": "a5db46c6-9296-48fd-bf6f-5b0440a5f683",
+    "idProduto": 1,
     "quantidade": -5
   }
 ]

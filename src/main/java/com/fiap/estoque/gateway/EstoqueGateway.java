@@ -4,19 +4,18 @@ import com.fiap.estoque.domain.Estoque;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface EstoqueGateway {
     
     Estoque salvar(Estoque estoque);
     
-    Optional<Estoque> buscarPorIdProduto(UUID idProduto);
+    Optional<Estoque> buscarPorIdProduto(Long idProduto);
     
-    Estoque atualizarQuantidade(UUID idProduto, Integer novaQuantidade);
+    Estoque atualizarQuantidade(Long idProduto, Integer novaQuantidade);
     
     List<Estoque> buscarTodos();
     
-    void removerPorIdProduto(UUID idProduto);
+    void removerPorIdProduto(Long idProduto);
     
-    boolean existePorIdProduto(UUID idProduto);
+    boolean existePorIdProduto(Long idProduto);
 }

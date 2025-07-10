@@ -1,11 +1,9 @@
 package com.fiap.estoque.usecase;
 
 import com.fiap.estoque.domain.Estoque;
-import com.fiap.estoque.exception.ProdutoNaoEncontradoException;
+import com.fiap.estoque.exception.EstoqueInsuficienteException;
 import com.fiap.estoque.gateway.EstoqueGateway;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class BaixaEstoqueUseCase {
@@ -16,16 +14,15 @@ public class BaixaEstoqueUseCase {
         this.gateway = gateway;
     }
     
-    public Estoque executar(UUID idProduto, Integer quantidade) {
+    public Estoque executar(Long idProduto, Integer quantidadeParaBaixa) {
         Estoque estoque = gateway.buscarPorIdProduto(idProduto)
-                .orElseThrow(() -> new ProdutoNaoEncontradoException(idProduto));
-        
-        if (estoque.getQuantidade() < quantidade) {
-            throw new IllegalArgumentException("Quantidade insuficiente em estoque. Disponível: " 
-                + estoque.getQuantidade() + ", Solicitado: " + quantidade);
+                .orElseThrow(() -> new com.fiap.estoque.exception.ProdutoNaoEncontradoException(idProduto));
+
+        if (!estoque.isDisponivel(quantidadeParaBaixa)) {
+            throw new EstoqueInsuficienteException(idProduto, estoque.getQuantidade(), quantidadeParaBaixa);
         }
         
-        Estoque estoqueAtualizado = new Estoque(idProduto, estoque.getQuantidade() - quantidade);
-        return gateway.salvar(estoqueAtualizado);
+        estoque.removerQuantidade(quantidadeParaBaixa);
+        return gateway.salvar(estoque);
     }
 }

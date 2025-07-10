@@ -1,12 +1,8 @@
 package com.fiap.estoque.exception;
 
 public class EstoqueInsuficienteException extends RuntimeException {
-    
-    public EstoqueInsuficienteException(String message) {
-        super(message);
-    }
-    
-    public EstoqueInsuficienteException(String message, Throwable cause) {
-        super(message, cause);
+
+    public EstoqueInsuficienteException(Long idProduto, int quantidadeDisponivel, int quantidadeSolicitada) {
+        super("Estoque insuficiente para o produto " + idProduto + ". Disponível: " + quantidadeDisponivel + ", Solicitado: " + quantidadeSolicitada);
     }
 }

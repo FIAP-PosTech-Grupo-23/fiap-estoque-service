@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class EstoqueGatewayImpl implements EstoqueGateway {
@@ -32,7 +31,7 @@ public class EstoqueGatewayImpl implements EstoqueGateway {
     
     @Override
     @Transactional
-    public Estoque atualizarQuantidade(UUID idProduto, Integer novaQuantidade) {
+    public Estoque atualizarQuantidade(Long idProduto, Integer novaQuantidade) {
         Optional<EstoqueEntity> entityOpt = repository.findByIdProduto(idProduto);
         if (entityOpt.isPresent()) {
             EstoqueEntity entity = entityOpt.get();
@@ -44,7 +43,7 @@ public class EstoqueGatewayImpl implements EstoqueGateway {
     }
     
     @Override
-    public Optional<Estoque> buscarPorIdProduto(UUID idProduto) {
+    public Optional<Estoque> buscarPorIdProduto(Long idProduto) {
         return repository.findByIdProduto(idProduto)
                 .map(mapper::toDomain);
     }
@@ -59,12 +58,12 @@ public class EstoqueGatewayImpl implements EstoqueGateway {
     
     @Override
     @Transactional
-    public void removerPorIdProduto(UUID idProduto) {
+    public void removerPorIdProduto(Long idProduto) {
         repository.deleteByIdProduto(idProduto);
     }
     
     @Override
-    public boolean existePorIdProduto(UUID idProduto) {
+    public boolean existePorIdProduto(Long idProduto) {
         return repository.existsByIdProduto(idProduto);
     }
 }
