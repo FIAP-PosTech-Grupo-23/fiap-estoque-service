@@ -1,11 +1,12 @@
 package com.fiap.estoque.controller;
 
+import com.fiap.estoque.controller.request.BaixaEstoqueRequest;
 import com.fiap.estoque.controller.request.CriarEstoqueRequest;
 import com.fiap.estoque.controller.response.EstoqueResponse;
 import com.fiap.estoque.controller.response.StatusEstoque;
 import com.fiap.estoque.domain.Estoque;
 import com.fiap.estoque.mapper.EstoqueMapper;
-import com.fiap.estoque.usecase.BaixarEstoqueUseCase;
+import com.fiap.estoque.usecase.BaixarEstoqueListaUseCase;
 import com.fiap.estoque.usecase.ConsultarEstoqueUseCase;
 import com.fiap.estoque.usecase.CriarEstoqueUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,36 +25,31 @@ import java.util.UUID;
 @Tag(name = "Estoque", description = "API para gerenciamento de estoque")
 public class EstoqueController {
 
-    private final BaixarEstoqueUseCase baixarEstoqueUseCase;
+    private final BaixarEstoqueListaUseCase baixarEstoqueListaUseCase;
     private final CriarEstoqueUseCase criarEstoqueUseCase;
     private final ConsultarEstoqueUseCase consultarEstoqueUseCase;
     private final EstoqueMapper estoqueMapper;
 
-    public EstoqueController(BaixarEstoqueUseCase baixarEstoqueUseCase, 
+    public EstoqueController(BaixarEstoqueListaUseCase baixarEstoqueListaUseCase, 
                            CriarEstoqueUseCase criarEstoqueUseCase,
                            ConsultarEstoqueUseCase consultarEstoqueUseCase,
                            EstoqueMapper estoqueMapper) {
-        this.baixarEstoqueUseCase = baixarEstoqueUseCase;
+        this.baixarEstoqueListaUseCase = baixarEstoqueListaUseCase;
         this.criarEstoqueUseCase = criarEstoqueUseCase;
         this.consultarEstoqueUseCase = consultarEstoqueUseCase;
         this.estoqueMapper = estoqueMapper;
     }
 
     @PostMapping("/baixa")
-    @Operation(summary = "Baixa de estoque", description = "Registra movimentação de baixa no estoque")
-    public ResponseEntity<EstoqueResponse> baixar(@Valid @RequestBody CriarEstoqueRequest request) {
-        try {
-            Estoque domain = estoqueMapper.toDomain(request);
-            boolean sucesso = baixarEstoqueUseCase.executar(domain);
-
-            String status = sucesso ? StatusEstoque.DISPONIVEL.getDescricao() : StatusEstoque.INDISPONIVEL.getDescricao();
-            EstoqueResponse response = new EstoqueResponse(request.idProduto(), request.quantidade(), status);
-
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            EstoqueResponse response = new EstoqueResponse(request.idProduto(), request.quantidade(), StatusEstoque.INDISPONIVEL.getDescricao());
-            return ResponseEntity.ok(response);
-        }
+    @Operation(summary = "Baixa de estoque", description = "Registra movimentação de baixa no estoque de múltiplos produtos")
+    public ResponseEntity<List<EstoqueResponse>> baixar(@Valid @RequestBody List<BaixaEstoqueRequest> request) {
+        List<Estoque> produtosBaixa = request.stream()
+            .map(estoqueMapper::toDomain)
+            .toList();
+            
+        List<EstoqueResponse> resultados = baixarEstoqueListaUseCase.executar(produtosBaixa);
+        
+        return ResponseEntity.ok(resultados);
     }
 
     @PostMapping

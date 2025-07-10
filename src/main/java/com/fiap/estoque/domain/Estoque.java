@@ -21,10 +21,11 @@ public class Estoque {
         return quantidade;
     }
 
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
     public void removerQuantidade(int valor) {
-        if (quantidade < valor) {
-            throw new IllegalArgumentException("Estoque insuficiente");
-        }
         this.quantidade -= valor;
     }
 
