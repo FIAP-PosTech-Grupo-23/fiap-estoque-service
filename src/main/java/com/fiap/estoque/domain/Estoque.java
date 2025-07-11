@@ -28,10 +28,6 @@ public class Estoque {
         this.quantidade -= valor;
     }
 
-    public void adicionarQuantidade(int valor) {
-        this.quantidade += valor;
-    }
-
     public boolean isDisponivel(int valor) {
         return this.quantidade >= valor;
     }
