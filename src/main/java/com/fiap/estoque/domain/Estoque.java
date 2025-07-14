@@ -1,7 +1,5 @@
 package com.fiap.estoque.domain;
 
-import java.util.Objects;
-
 public class Estoque {
 
     private Long idProduto;
@@ -30,18 +28,5 @@ public class Estoque {
 
     public boolean isDisponivel(int valor) {
         return this.quantidade >= valor;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Estoque)) return false;
-        Estoque estoque = (Estoque) o;
-        return Objects.equals(idProduto, estoque.idProduto);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idProduto);
     }
 }
